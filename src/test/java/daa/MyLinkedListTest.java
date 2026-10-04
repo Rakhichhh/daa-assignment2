@@ -7,11 +7,11 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DynamicArrayTest {
+public class    MyLinkedListTest {
 
     @Test
     void emptyArray() {
-        DynamicArray array = new DynamicArray();
+        MyLinkedList array = new MyLinkedList();
 
         assertEquals(0, array.size());
         assertFalse(array.contains(10));
@@ -23,7 +23,7 @@ public class DynamicArrayTest {
 
     @Test
     void oneElement() {
-        DynamicArray array = new DynamicArray();
+        MyLinkedList array = new MyLinkedList();
 
         array.add(7);
 
@@ -36,7 +36,7 @@ public class DynamicArrayTest {
 
     @Test
     void growsAndKeepsValues() {
-        DynamicArray array = new DynamicArray();
+        MyLinkedList array = new MyLinkedList();
 
         for (int i = 0; i < 100; i++) {
             array.add(i);
@@ -51,7 +51,7 @@ public class DynamicArrayTest {
 
     @Test
     void insertAndRemoveAtDifferentPositions() {
-        DynamicArray array = new DynamicArray();
+        MyLinkedList array = new MyLinkedList();
 
         array.add(20);
         array.add(0, 10);
@@ -73,7 +73,7 @@ public class DynamicArrayTest {
 
     @Test
     void duplicateValues() {
-        DynamicArray array = new DynamicArray();
+        MyLinkedList array = new MyLinkedList();
 
         array.add(5);
         array.add(5);
@@ -89,7 +89,7 @@ public class DynamicArrayTest {
 
     @Test
     void invalidIndices() {
-        DynamicArray array = new DynamicArray();
+        MyLinkedList array = new MyLinkedList();
 
         assertThrows(IndexOutOfBoundsException.class,
                 () -> array.add(-1, 10));
@@ -112,7 +112,7 @@ public class DynamicArrayTest {
 
     @Test
     void randomOperationsMatchArrayList() {
-        DynamicArray actual = new DynamicArray();
+        MyLinkedList actual = new MyLinkedList();
         ArrayList<Integer> expected = new ArrayList<>();
         Random random = new Random(42);
 
@@ -143,40 +143,5 @@ public class DynamicArrayTest {
                 assertEquals(expected.get(j).intValue(), actual.get(j));
             }
         }
-    }
-
-    @Test
-    void countsOperations() {
-        DynamicArray array = new DynamicArray();
-
-        array.add(10);
-        array.add(20);
-        array.add(30);
-
-        Metrics metrics = array.getMetrics();
-        metrics.reset();
-
-        assertEquals(20, array.get(1));
-        assertEquals(1L, metrics.getSteps());
-        assertEquals(0L, metrics.getMoves());
-        assertEquals(0L, metrics.getComparisons());
-
-        metrics.reset();
-
-        assertFalse(array.contains(99));
-        assertEquals(3L, metrics.getSteps());
-        assertEquals(3L, metrics.getComparisons());
-
-        metrics.reset();
-
-        array.add(0, 5);
-        assertEquals(3L, metrics.getSteps());
-        assertEquals(3L, metrics.getMoves());
-
-        metrics.reset();
-
-        assertEquals(5, array.remove(0));
-        assertEquals(4L, metrics.getSteps());
-        assertEquals(3L, metrics.getMoves());
     }
 }
